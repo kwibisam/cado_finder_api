@@ -69,8 +69,12 @@ WSGI_APPLICATION = 'cado_finder_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd74pfl6c3i2oh5',
+        'USER': 'irbbsrgrungigm',
+        'PASSWORD': 'eb7035eaeae4ff589a84db4abff5ce9f56dfe26ec3466efb96c4536e1f899027',
+        'HOST': 'postgres://irbbsrgrungigm:eb7035eaeae4ff589a84db4abff5ce9f56dfe26ec3466efb96c4536e1f899027@ec2-35-170-21-76.compute-1.amazonaws.com:5432/d74pfl6c3i2oh5',
+        'PORT': '5432'
     }
 }
 

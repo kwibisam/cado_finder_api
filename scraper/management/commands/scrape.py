@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
 from base import models
-from decouple import config
 import json
 import requests
 import time
@@ -10,7 +9,7 @@ class Command(BaseCommand):
     help = "collect advocates"
 
     TOKEN = os.getenv('API_TOKEN', 'Optional default value')
-    BASE_URL = "https://api.twitter.com/1.1/users/search.json?q=developer advocate"
+    BASE_URL = "https://api.twitter.com/1.1/users/search.json?q=developer advocate&page=2"
     headers = {'Authorization': "Bearer {}".format(TOKEN)}
 
     advocate_list = []
