@@ -8,9 +8,10 @@ from .serializer import AdvocateSerializer, CompanySerializer
 
 
 # Create your views here
+base_url = "https://cado-finder-api.herokuapp.com"
 @api_view(['GET'])
 def endpoints(request):
-    data = ["/advocates", "advocates/:username","advocates/search","/companies", "/companies/:name"]
+    data = [f"{base_url}/advocates", f"{base_url}/advocates/:username",f"{base_url}/advocates/search",f"{base_url}/companies", f"{base_url}/companies/:name"]
     return Response(data)
 
 #Advocates
