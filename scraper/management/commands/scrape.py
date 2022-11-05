@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = "collect advocates"
 
     TOKEN = os.getenv('API_TOKEN', 'Optional default value')
-    BASE_URL = "https://api.twitter.com/1.1/users/search.json?q=developer advocate&page=2"
+    BASE_URL = "https://api.twitter.com/1.1/users/search.json?q=developer advocate&page=3"
     headers = {'Authorization': "Bearer {}".format(TOKEN)}
 
     advocate_list = []
