@@ -4,12 +4,13 @@ from decouple import config
 import json
 import requests
 import time
+import os
 
 class Command(BaseCommand):
     help = "collect advocates"
 
-    BASE_URL = config('BASE_URL')
-    TOKEN = config('API_TOKEN')
+    TOKEN = os.getenv('API_TOKEN', 'Optional default value')
+    BASE_URL = "https://api.twitter.com/1.1/users/search.json?q=developer advocate"
     headers = {'Authorization': "Bearer {}".format(TOKEN)}
 
     advocate_list = []
