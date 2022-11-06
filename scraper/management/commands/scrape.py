@@ -108,7 +108,7 @@ class Command(BaseCommand):
             except Exception as e:
                 print('scraping failed with the following exception:')
                 print(e)
-            time.sleep(30)
+            time.sleep(120)
 
     # collect advocates
     def scrap (self):
