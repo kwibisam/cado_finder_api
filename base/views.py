@@ -8,7 +8,7 @@ from .serializer import AdvocateSerializer, CompanySerializer
 
 
 paginator = PageNumberPagination()
-paginator.page_size = 10
+paginator.page_size = 20
 # Create your views here
 base_url = "https://cado-finder-api.herokuapp.com"
 @api_view(['GET'])
