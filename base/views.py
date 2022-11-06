@@ -1,12 +1,14 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from base.models import Advocate, Company
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 from .serializer import AdvocateSerializer, CompanySerializer
 
 
+paginator = PageNumberPagination()
+paginator.page_size = 10
 # Create your views here
 base_url = "https://cado-finder-api.herokuapp.com"
 @api_view(['GET'])
@@ -19,19 +21,9 @@ def endpoints(request):
 def advocate_list(request):
     if request.method == 'GET':
         advocates = Advocate.objects.all()
-        serializer = AdvocateSerializer(advocates, many = True)
-        return Response(serializer.data)
-
-@api_view(['GET'])
-def search_advos(request):
-    query = request.GET.get('query')
-    if query:
-        advocates = Advocate.objects.filter(Q(username__icontains=query) | Q(bio__icontains=query))
-        serializer = AdvocateSerializer(advocates, many = True)
-        return Response(serializer.data)
-    else:
-        return Response("query parameter missing")
-
+        result_page = paginator.paginate_queryset(advocates, request)
+        serializer = AdvocateSerializer(result_page, many = True)
+        return paginator.get_paginated_response(serializer.data)
     if request.method == 'POST':
         try:
             advocate = Advocate.objects.create(
@@ -46,6 +38,17 @@ def search_advos(request):
             return Response(serializer.data)
         except Exception as e:
             return Response(e)
+
+@api_view(['GET'])
+def advocate_search(request):
+    query = request.GET.get('query')
+    if query:
+        advocates = Advocate.objects.filter(Q(username__icontains=query) | Q(bio__icontains=query))
+        result_page = paginator.paginate_queryset(advocates, request)
+        serializer = AdvocateSerializer(result_page, many = True)
+        return paginator.get_paginated_response(serializer.data)
+    else:
+        return Response("query parameter missing")
 
 @api_view(['GET', 'PUT','DELETE'])
 def advocate_info(request, username):
@@ -72,8 +75,9 @@ def advocate_info(request, username):
 def company_list(request):
     if request.method == 'GET':
         companies = Company.objects.all()
-        serializer = CompanySerializer(companies, many = True)
-        return Response(serializer.data)
+        result_page = paginator.paginate_queryset(companies, request)
+        serializer = CompanySerializer(result_page, many = True)
+        return paginator.get_paginated_response(serializer.data)
     if request.method == 'POST':
         company = Company.objects.create(
             name = request.data['name'],
