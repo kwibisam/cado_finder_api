@@ -27,7 +27,7 @@ class Command(BaseCommand):
             self.scrap_comps(self.company_names)
             print("creating companies")
             self.createCompany()
-            print("creating advocates",len(self.advocate_list))
+            print("creating advocates",len(self.advocate_list)) 
             self.createAdovocate()
             self.current_page += 1
             self.BASE_URL = f"https://api.twitter.com/1.1/users/search.json?q=developer advocate&page={self.current_page}"
@@ -108,7 +108,7 @@ class Command(BaseCommand):
             except Exception as e:
                 print('scraping failed with the following exception:')
                 print(e)
-            time.sleep(120)
+            time.sleep(40)
 
     # collect advocates
     def scrap (self):
