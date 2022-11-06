@@ -9,22 +9,28 @@ class Command(BaseCommand):
     help = "collect advocates"
 
     TOKEN = os.getenv('API_TOKEN', 'Optional default value')
-    BASE_URL = "https://api.twitter.com/1.1/users/search.json?q=developer advocate&page=4"
+    page_count = 20
+    current_page = 5
+    BASE_URL = f"https://api.twitter.com/1.1/users/search.json?q=developer advocate&page{current_page}"
     headers = {'Authorization': "Bearer {}".format(TOKEN)}
 
     advocate_list = []
     company_names = []
     company_list = []
+    
 
     def handle(self, *args, **options):
-        print('collecting advocates')
-        self.scrap()
-        print('collecting companies')
-        self.scrap_comps(self.company_names)
-        print("creating companies")
-        self.createCompany()
-        print("creating advocates",len(self.advocate_list))
-        self.createAdovocate()
+        while self.current_page < self.page_count:
+            print('collecting advocates')
+            self.scrap()
+            print('collecting companies')
+            self.scrap_comps(self.company_names)
+            print("creating companies")
+            self.createCompany()
+            print("creating advocates",len(self.advocate_list))
+            self.createAdovocate()
+            self.current_page += 1
+            self.BASE_URL = f"https://api.twitter.com/1.1/users/search.json?q=developer advocate&page={self.current_page}"
         self.stdout.write( 'task complete' )
 
     def createCompany(self):

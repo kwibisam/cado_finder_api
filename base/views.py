@@ -3,12 +3,13 @@ from django.db.models import Q
 from base.models import Advocate, Company
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from .serializer import AdvocateSerializer, CompanySerializer
 
 
 paginator = PageNumberPagination()
-paginator.page_size = 20
+paginator.page_size = 10
 # Create your views here
 base_url = "https://cado-finder-api.herokuapp.com"
 @api_view(['GET'])
@@ -48,7 +49,7 @@ def advocate_search(request):
         serializer = AdvocateSerializer(result_page, many = True)
         return paginator.get_paginated_response(serializer.data)
     else:
-        return Response("query parameter missing")
+        return Response("query parameter missing",status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT','DELETE'])
 def advocate_info(request, username):
@@ -68,7 +69,7 @@ def advocate_info(request, username):
         return Response(serializer.data)
     if request.method == 'DELETE':
         advocate.delete()
-        return Response("user deleted")
+        return Response("advocate deleted")
 
 # Companies
 @api_view(['GET','POST'])
