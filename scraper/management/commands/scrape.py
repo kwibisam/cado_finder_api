@@ -77,7 +77,7 @@ class Command(BaseCommand):
     def find_comp_name(self,bio):
         bio_terms = bio.lower().split()
         for i in range(len(bio_terms) -1):
-            if bio_terms[i] == 'developer' and bio_terms[i+1] == 'advocate':
+            if (bio_terms[i] == 'developer'  or"developer" in bio_terms[i]) and (bio_terms[i+1] == 'advocate' or "advocate" in bio_terms[i+1]):
                 if i+3 < len(bio_terms):
                     if bio_terms[i+2].startswith("@") and len(bio_terms[i+2]) >1:
                         #save company name
