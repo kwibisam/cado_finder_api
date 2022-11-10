@@ -19,7 +19,7 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         while self.current_page < self.page_count:
-            BASE_URL = f"https://api.twitter.com/1.1/users/search.json?q=developer advocate&page{self.current_page}"
+            BASE_URL = f"https://api.twitter.com/1.1/users/search.json?q=developer advocate&page={self.current_page}"
             print('collecting advocates')
             self.scrap(BASE_URL)
             print('collecting companies')
