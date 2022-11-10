@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     TOKEN = os.getenv('API_TOKEN', 'Optional default value')
     page_count = 20
-    current_page = 9
+    current_page = 10
     headers = {'Authorization': "Bearer {}".format(TOKEN)}
 
     advocate_list = []
