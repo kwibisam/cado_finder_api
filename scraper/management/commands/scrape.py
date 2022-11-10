@@ -10,19 +10,18 @@ class Command(BaseCommand):
 
     TOKEN = os.getenv('API_TOKEN', 'Optional default value')
     page_count = 20
-    current_page = 5
-    BASE_URL = f"https://api.twitter.com/1.1/users/search.json?q=developer advocate&page{current_page}"
+    current_page = 6
     headers = {'Authorization': "Bearer {}".format(TOKEN)}
 
     advocate_list = []
     company_names = []
     company_list = []
     
-
     def handle(self, *args, **options):
         while self.current_page < self.page_count:
+            BASE_URL = f"https://api.twitter.com/1.1/users/search.json?q=developer advocate&page{self.current_page}"
             print('collecting advocates')
-            self.scrap()
+            self.scrap(BASE_URL)
             print('collecting companies')
             self.scrap_comps(self.company_names)
             print("creating companies")
@@ -30,7 +29,6 @@ class Command(BaseCommand):
             print("creating advocates",len(self.advocate_list)) 
             self.createAdovocate()
             self.current_page += 1
-            self.BASE_URL = f"https://api.twitter.com/1.1/users/search.json?q=developer advocate&page={self.current_page}"
         self.stdout.write( 'task complete' )
 
     def createCompany(self):
@@ -111,9 +109,9 @@ class Command(BaseCommand):
             time.sleep(40)
 
     # collect advocates
-    def scrap (self):
+    def scrap (self, url_):
         try:
-            r = requests.get(self.BASE_URL, headers=self.headers)
+            r = requests.get(url_, headers=self.headers)
             data = json.loads(r.content)
             for dict in data:
                 profile_pic = dict['profile_image_url_https']
