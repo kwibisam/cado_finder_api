@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     TOKEN = os.getenv('API_TOKEN', 'Optional default value')
     page_count = 20
-    current_page = 6
+    current_page = 9
     headers = {'Authorization': "Bearer {}".format(TOKEN)}
 
     advocate_list = []
@@ -26,7 +26,7 @@ class Command(BaseCommand):
             self.scrap_comps(self.company_names)
             print("creating companies")
             self.createCompany()
-            print("creating advocates",len(self.advocate_list)) 
+            print("creating advocates",len(self.advocate_list))
             self.createAdovocate()
             self.current_page += 1
         self.stdout.write( 'task complete' )

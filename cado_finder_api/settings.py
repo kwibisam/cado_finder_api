@@ -63,19 +63,21 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cado_finder_api.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+DB_USER = os.getenv('DB_USER', 'Optional default value')
+DB_PASS = os.getenv('DB_PASS', 'Optional default value')
+DB_HOST = os.getenv('DB_HOST', 'Optional default value')
+DB_PORT = os.getenv('DB_PORT', 'Optional default value')
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'd74pfl6c3i2oh5',
-        'USER': 'irbbsrgrungigm',
-        'PASSWORD': 'eb7035eaeae4ff589a84db4abff5ce9f56dfe26ec3466efb96c4536e1f899027',
-        'HOST': 'postgres://irbbsrgrungigm:eb7035eaeae4ff589a84db4abff5ce9f56dfe26ec3466efb96c4536e1f899027@ec2-35-170-21-76.compute-1.amazonaws.com:5432/d74pfl6c3i2oh5',
-        'PORT': '5432'
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT
     }
 }
 
